@@ -1,0 +1,10 @@
+  <div class="message {{ message.type }}" [class.system]="message.from.system">
+    <div class="heading">
+      <div class="nickname">{{ message.from.name }}</div>
+      <div class="date">{{ message.date | amTimeAgo }}</div>
+    </div>
+    <div class="text">{{ message.text }}</div>
+    <div class="delivered text-muted" *ngIf="message.type == 'outgoing' && message.delivered">
+      Delivered
+    </div>
+  </div>

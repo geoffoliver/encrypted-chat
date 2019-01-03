@@ -1,0 +1,112 @@
+<div *ngIf="socketConnected">
+  <div *ngIf="!me" class="enter-nickname">
+    <div class="row">
+      <div class="col-sm-6 offset-sm-3">
+        <div class="well">
+          <p class="lead" style="margin-bottom: 50px;">
+            Use this site to create end-to-end encrypted chat rooms. Nothing is stored on the server
+            and nothing can be retrieved after you close the browser. Enjoy!
+          </p>
+          <form #nickForm="ngForm" (submit)="login($event)">
+            <div class="form-group">
+              <input type="text"
+                class="form-control"
+                placeholder="Your Name"
+                required="true"
+                name="nickname"
+                [(ngModel)]="nickname">
+              <div class="form-text text-muted">
+                The name other people will see
+              </div>
+            </div>
+            <!--
+            <div class="form-group">
+              <input type="password"
+                class="form-control"
+                placeholder="Encryption Key"
+                required="true"
+                name="password"
+                [(ngModel)]="password">
+              <div class="form-text text-muted">
+                Used to encrypt your messages.
+              </div>
+            </div>
+            -->
+            <div class="form-group">
+              <input type="text"
+                class="form-control"
+                placeholder="Room Name"
+                required="true"
+                name="roomName"
+                [(ngModel)]="roomName">
+              <div class="orm-text text-muted">
+                The room name where you'll be chatting
+              </div>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-success btn-block"
+                  [disabled]="!nickForm.valid">
+                  Login
+                </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="generatingKey" class="key-loader">
+      Please wait while we make everything secure...
+    </div>
+  </div>
+  <div *ngIf="me" class="chat-room" #chatRoom>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-2 member-list">
+          <small class="text-muted"><strong>Room:</strong> {{ roomName }}</small>
+          <ul class="list-unstyled">
+            <li *ngFor="let member of members">
+              <i class="fa fa-fw fa-circle member-status"
+                [class.text-success]="member.active == true"
+                [class.text-warning]="member.active == false">
+              </i>
+              {{ member.name }}
+              <i class="fa fa-fw fa-keyboard-o text-muted" *ngIf="member.typing"></i>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-10 offset-md-2 message-list">
+          <message *ngFor="let message of messages" [message]="message"></message>
+        </div>
+      </div>
+    </div>
+    <div class="composer">
+      <form #newMessageForm="ngForm" (submit)="sendMessage()">
+        <div class="form-group">
+          <div class="input-group">
+            <input type="text"
+                autoFocus
+                placeholder="Send message..."
+                class="form-control"
+                required="true"
+                name="newMessage"
+                (keydown)="sendTypingNotification($event)"
+                [(ngModel)]="newMessage">
+            <div class="input-group-btn">
+              <button class="btn btn-success"
+                [disabled]="!newMessageForm.valid">
+                Send
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div *ngIf="!socketConnected" id="disconnected">
+  <div class="alert alert-info" *ngIf="!connectFailed">
+    <i class="fa fa-fw fa-spin fa-refresh"></i> Connecting. Please wait.
+  </div>
+  <div class="alert alert-error" *ngIf="connectFailed">
+    Connection failed :(
+  </div>
+</div>

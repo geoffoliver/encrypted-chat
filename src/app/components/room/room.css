@@ -1,0 +1,40 @@
+.key-loader{
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255,255,255,0.9);
+  text-align: center;
+  padding-top: 48vh;
+  z-index: 10000;
+}
+.enter-nickname{
+	padding-top: 120px;
+}
+.chat-room{
+  padding: 70px 0;
+}
+
+message{
+  display: block;
+  padding-bottom: 10px;
+}
+
+message + message{
+  padding-top: 10px;
+  border-top: 1px solid #DDD;
+}
+
+.composer{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0 15px 15px;
+  background: #FFF;
+}
+
+.composer .form-group{
+  margin: 0;
+}

@@ -1,0 +1,32 @@
+.nickname{
+  font-weight: bold;
+  display: inline;
+}
+
+.date{
+  display: inline;
+  float: right;
+  color: #CCC;
+}
+
+.outgoing .nickname{
+  color: red;
+}
+
+.incoming .nickname{
+  color: blue;
+}
+
+.delivered{
+  font-size: 11px;
+  color: #999;
+}
+
+.system{
+  color: #666;
+  font-style: italic;
+}
+
+.system .nickname{
+  color: #666 !important;
+}

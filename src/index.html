@@ -4,11 +4,27 @@
   <meta charset="utf-8">
   <title>EncryptedChat</title>
   <base href="/">
-
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <script src="//use.fontawesome.com/08bd04666d.js"></script>
 </head>
 <body>
-  <app-root></app-root>
+  <nav class="navbar navbar-toggleable-sm navbar-inverse bg-inverse fixed-top">
+    <button class="navbar-toggler navbar-toggler-right"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarCollapse"
+      aria-controls="navbarCollapse"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      (click)="toggleMemberList()">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">Encrypted Chat</a>
+  </nav>
+  <div class="container-fluid">
+    <app-root></app-root>
+  </div>
 </body>
 </html>
