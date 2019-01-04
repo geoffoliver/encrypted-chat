@@ -4,6 +4,6 @@ export class Message {
   date: number;
   type: string = 'incoming';
   from: User;
-  text: string = '';
+  message: string = '';
   delivered: boolean = false;
 }

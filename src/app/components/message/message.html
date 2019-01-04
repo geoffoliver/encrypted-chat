@@ -3,8 +3,17 @@
       <div class="nickname">{{ message.from.name }}</div>
       <div class="date">{{ message.date | amTimeAgo }}</div>
     </div>
-    <div class="text">{{ message.text }}</div>
-    <div class="delivered text-muted" *ngIf="message.type == 'outgoing' && message.delivered">
-      Delivered
+    <div class="text" [class.text-muted]="message.type == 'outgoing' && !message.delivered">
+      {{ message.message }}
+      <fa-icon
+        [spin]="true"
+        [icon]="['fal', 'sync']"
+        *ngIf="message.type == 'outgoing' && !message.delivered"
+      ></fa-icon>
     </div>
+    <!--
+      <div class="delivered text-muted" *ngIf="message.type == 'outgoing' && message.delivered">
+        Delivered
+      </div>
+    -->
   </div>

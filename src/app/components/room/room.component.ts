@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef, Injectable } from '@angular/core';
-//import { Component, NgZone, ViewChild, ElementRef } from '@angular/core';
+
 import { Socket } from 'ngx-socket-io';
+
 import { Message } from '../../models/message';
 import { User } from '../../models/user';
 
@@ -87,13 +88,13 @@ export class RoomComponent {
       m.date = new Date().getTime();
       m.type = 'incoming';
       m.from = this.systemUser;
-      m.text = `Welcome, ${this.me.name}`;
+      m.message = `Welcome, ${this.me.name}`;
 
       this.messages.push(m);
       this.scrollToBottom();
     });
 
-    this.socket.on('chat.message', (msg: any) => {
+    this.socket.on('chat.message', async (msg: any) => {
       if (!this.connected) {
         return;
       }
@@ -111,20 +112,18 @@ export class RoomComponent {
 
       msg.type = 'incoming';
 
+      let pubKeys = await (openpgp.key.readArmored(msg.from.pubKey)).keys;
+
       let decryptOptions = {
-        message: openpgp.message.readArmored(msg.text),
-        privateKey: this.privKey,
-        publicKeys: openpgp.key.readArmored(msg.from.pubKey).keys,
-        format: 'binary'
+        message: await openpgp.message.readArmored(msg.message),
+        publicKeys: pubKeys,
+        privateKeys: [this.privKey],
       };
 
-      openpgp.decrypt(decryptOptions).then((decrypted: any) => {
-        msg.text = this.uintToString(decrypted.data);
-        //this._ngZone.run(() => {
-          this.messages.push(msg);
-          this.scrollToBottom();
-        //});
-
+      openpgp.decrypt(decryptOptions).then(async (decrypted: any) => {
+        msg.message = decrypted.data;
+        this.messages.push(msg);
+        this.scrollToBottom();
       }, (error: any) => {
         console.log('decryption error', error);
       });
@@ -149,7 +148,7 @@ export class RoomComponent {
     this.socket.on('joined', (member: any) => {
       var m = new Message();
       m.date = new Date().getTime();
-      m.text = `${member.name} joined`;
+      m.message = `${member.name} joined`;
       m.type = 'incoming';
       m.from = this.systemUser;
       this.messages.push(m);
@@ -159,7 +158,7 @@ export class RoomComponent {
     this.socket.on('departed', (member: any) => {
       var m = new Message();
       m.date = new Date().getTime();
-      m.text = `${member.name} departed`;
+      m.message = `${member.name} departed`;
       m.type = 'incoming';
       m.from = this.systemUser;
       this.messages.push(m);
@@ -184,37 +183,11 @@ export class RoomComponent {
       }
     });
 
+    openpgp.config.aead_protect = true;
+
     openpgp.initWorker({
       path: 'openpgp.worker.min.js'
     });
-    openpgp.config.aead_protect = true;
-    /*
-    var pgp = document.createElement('script');
-    pgp.src = "node_modules/openpgp/dist/openpgp.min.js";
-    document.getElementsByTagName('head')[0].appendChild(pgp);
-    pgp.onload = () => {
-      openpgp.initWorker({
-        path: '/node_modules/openpgp/dist/openpgp.worker.min.js'
-      });
-      openpgp.config.aead_protect = true;
-    };
-    */
-  }
-
-  stringToUint(string: string) {
-    var string = btoa(unescape(encodeURIComponent(string))),
-      charList = string.split(''),
-      uintArray = [];
-    for (var i = 0; i < charList.length; i++) {
-      uintArray.push(charList[i].charCodeAt(0));
-    }
-    return new Uint8Array(uintArray);
-  }
-
-  uintToString(uintArray: any) {
-    var encodedString = String.fromCharCode.apply(null, uintArray),
-      decodedString = decodeURIComponent(escape(atob(encodedString)));
-    return decodedString;
   }
 
   makePassword() {
@@ -227,57 +200,32 @@ export class RoomComponent {
     return text;
   }
 
-  async getPgpKey(cb: any) {
-    let key = {};
-    let storeKey = 'pgp' + this.roomName + this.nickname;
-    let cookieKey = sessionStorage.getItem(storeKey);
-    console.log('getting key');
-    if (cookieKey) {
-      let decryptOptions = {
-        message: await openpgp.message.readArmored(cookieKey),
-        password: this.password
-      };
-
-      openpgp.decrypt(decryptOptions).then((decrypted: any) => {
-        cb(JSON.parse(decrypted.data));
-      });
-      return;
-    }
-
+  async getPgpKey(password, cb: any) {
     let genKeyOptions = {
-      userIds: [{ name: this.nickname, email: this.nickname.replace(/[^\w]/, '-') + '@encrypted-chat.dev' }],
-      numBits: 4096
+      userIds: [{
+        name: this.nickname,
+        email: this.nickname.replace(/[^\w]/, '-') + '@encrypted-chat.dev',
+      }],
+      numBits: 4096,
+      passphrase: password
     };
 
     let component = this;
 
     this.generatingKey = true;
 
-    //console.log('generating key');
-
     openpgp.generateKey(genKeyOptions).then((key: any) => {
       component.generatingKey = false;
-      let encryptOptions = {
-        message: openpgp.message.fromText(JSON.stringify(key)),
-        passwords: [component.password]
-      };
-
-      //console.log('encrypting key');
-      openpgp.encrypt(encryptOptions).then((encrypted: any) => {
-        sessionStorage.setItem(storeKey, encrypted.data);
-        cb(key);
-      }, (error: any) => {
-        cb(false);
-      });
+      cb(key);
     }, (error: any) => {
+      cb(false);
     });
   }
 
   login(e: Event) {
     e.stopPropagation();
-    this.password = this.makePassword();
 
-    if (this.nickname === '' || this.roomName === '' || this.password === '') {
+    if (this.nickname === '' || this.roomName === '') {
       return;
     }
 
@@ -286,7 +234,9 @@ export class RoomComponent {
       return;
     }
 
-    this.getPgpKey(async (key: any) => {
+    this.password = this.makePassword();
+
+    this.getPgpKey(this.password, async (key: any) => {
       if (!key) {
         alert('Security failed. Sorry!');
         return;
@@ -297,11 +247,9 @@ export class RoomComponent {
         name: this.nickname
       });
 
-      //console.log('k', openpgp.key.readArmored(key.privateKeyArmored));
-
       this.privKey = (await openpgp.key.readArmored(key.privateKeyArmored)).keys[0];
 
-      console.log('pk', this.privKey);
+      await this.privKey.decrypt(this.password);
 
       this.socket.emit('login', {
         user: this.me,
@@ -314,7 +262,7 @@ export class RoomComponent {
 
   scrollToBottom() {
     setTimeout(function () {
-      document.body.scrollTop = document.body.scrollHeight;
+      document.scrollingElement.scrollTop = document.scrollingElement.scrollHeight;
     }, 0);
   }
 
@@ -328,39 +276,41 @@ export class RoomComponent {
     m.date = new Date().getTime();
     m.type = 'outgoing';
     m.from = this.me;
-    m.text = this.newMessage;
+    m.message = this.newMessage;
 
     let encryptedMsg = Object.assign({}, m);
+
+    this.newMessage = '';
 
     this.messages.push(m);
 
     this.scrollToBottom();
 
-    this.newMessage = '';
+    setTimeout(() => {
+      let pubKeys = this.members.map(async (member) => {
+        return (await openpgp.key.readArmored(member.pubKey)).keys[0];
+      });
 
-    let pubKeys: any = [];
-    this.members.map((m) => {
-      if (m.id != this.me.id) {
-        pubKeys = pubKeys.concat(openpgp.key.readArmored(m.pubKey).keys)
-      }
+      Promise.all(pubKeys).then((keys: any) => {
+        if (keys.length === 0) {
+          return;
+        }
+
+        let encryptOptions = {
+          message: openpgp.message.fromText(encryptedMsg.message),
+          publicKeys: keys,
+          privateKeys: [this.privKey],
+        };
+
+        openpgp.encrypt(encryptOptions).then((encrypted: any) => {
+          encryptedMsg.message = encrypted.data;
+          this.socket.emit('send.message', encryptedMsg);
+        }, (error: any) => {
+          console.log('encryption error', error);
+        });
+      });
     });
 
-    if (pubKeys.length === 0) {
-      return;
-    }
-
-    let encryptOptions = {
-      data: this.stringToUint(encryptedMsg.text),
-      publicKeys: pubKeys,
-      privateKey: this.privKey,
-    };
-
-    openpgp.encrypt(encryptOptions).then((encrypted: any) => {
-      encryptedMsg.text = encrypted.data;
-      this.socket.emit('chat.message', encryptedMsg);
-    }, (error: any) => {
-      console.log('encryption error', error);
-    });
   }
 
   sendTypingNotification(e: any) {

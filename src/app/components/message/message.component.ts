@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Message } from '../../models/message';
+import { faSync } from '@fortawesome/pro-light-svg-icons';
 
 @Component({
   moduleId: module.id,
@@ -12,6 +13,8 @@ export class MessageComponent implements OnInit {
 
   @Input()
   message: Message;
+
+  faSync = faSync;
 
   constructor() {}
 

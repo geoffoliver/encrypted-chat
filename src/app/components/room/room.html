@@ -1,59 +1,66 @@
 <div *ngIf="socketConnected">
   <div *ngIf="!me" class="enter-nickname">
-    <div class="row">
-      <div class="col-sm-6 offset-sm-3">
-        <div class="well">
-          <p class="lead" style="margin-bottom: 50px;">
-            Use this site to create end-to-end encrypted chat rooms. Nothing is stored on the server
-            and nothing can be retrieved after you close the browser. Enjoy!
-          </p>
-          <form #nickForm="ngForm" (submit)="login($event)">
-            <div class="form-group">
-              <input type="text"
-                class="form-control"
-                placeholder="Your Name"
-                required="true"
-                name="nickname"
-                [(ngModel)]="nickname">
-              <div class="form-text text-muted">
-                The name other people will see
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3">
+          <div class="well">
+            <p class="lead">
+              Use this site to create encrypted chat rooms. Nothing is stored on the server
+              and nothing can be retrieved after you close the browser. Enjoy!
+            </p>
+            <form #nickForm="ngForm" (submit)="login($event)">
+              <div class="form-group">
+                <input type="text"
+                  autofocus
+                  class="form-control"
+                  placeholder="Your Name"
+                  required="true"
+                  name="nickname"
+                  [(ngModel)]="nickname">
+                <div class="form-text text-muted">
+                  The name other people will see
+                </div>
               </div>
-            </div>
-            <!--
-            <div class="form-group">
-              <input type="password"
-                class="form-control"
-                placeholder="Encryption Key"
-                required="true"
-                name="password"
-                [(ngModel)]="password">
-              <div class="form-text text-muted">
-                Used to encrypt your messages.
+              <!--
+              <div class="form-group">
+                <input type="password"
+                  class="form-control"
+                  placeholder="Encryption Key"
+                  required="true"
+                  name="password"
+                  [(ngModel)]="password">
+                <div class="form-text text-muted">
+                  Used to encrypt your messages.
+                </div>
               </div>
-            </div>
-            -->
-            <div class="form-group">
-              <input type="text"
-                class="form-control"
-                placeholder="Room Name"
-                required="true"
-                name="roomName"
-                [(ngModel)]="roomName">
-              <div class="orm-text text-muted">
-                The room name where you'll be chatting
+              -->
+              <div class="form-group">
+                <input type="text"
+                  class="form-control"
+                  placeholder="Room Name"
+                  required="true"
+                  name="roomName"
+                  [(ngModel)]="roomName">
+                <div class="orm-text text-muted">
+                  The room name where you'll be chatting
+                </div>
               </div>
-            </div>
-            <div class="form-group">
-                <button class="btn btn-success btn-block"
-                  [disabled]="!nickForm.valid">
-                  Login
-                </button>
-            </div>
-          </form>
+              <div class="form-group">
+                  <button class="btn btn-success btn-block btn-lg"
+                    [disabled]="!nickForm.valid">
+                    Login
+                  </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
     <div *ngIf="generatingKey" class="key-loader">
+      <fa-icon
+        [spin]="true"
+        [icon]="['fal', 'sync']"
+      ></fa-icon>
       Please wait while we make everything secure...
     </div>
   </div>
@@ -64,12 +71,20 @@
           <small class="text-muted"><strong>Room:</strong> {{ roomName }}</small>
           <ul class="list-unstyled">
             <li *ngFor="let member of members">
-              <i class="fa fa-fw fa-circle member-status"
+              <fa-icon
+                [icon]="member.active ?
+                  ['fas', 'circle'] :
+                  ['fal', 'circle']"
+                class="member-status"
                 [class.text-success]="member.active == true"
                 [class.text-warning]="member.active == false">
-              </i>
+              </fa-icon>
               {{ member.name }}
-              <i class="fa fa-fw fa-keyboard-o text-muted" *ngIf="member.typing"></i>
+              <fa-icon
+                [icon]="['fal', 'keyboard']"
+                class="text-muted"
+                *ngIf="member.typing"
+              ></fa-icon>
             </li>
           </ul>
         </div>
@@ -84,6 +99,7 @@
           <div class="input-group">
             <input type="text"
                 autoFocus
+                autocomplete="off"
                 placeholder="Send message..."
                 class="form-control"
                 required="true"

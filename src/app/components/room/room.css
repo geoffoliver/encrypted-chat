@@ -1,4 +1,4 @@
-.key-loader{
+.key-loader {
   position: fixed;
   left: 0;
   top: 0;
@@ -9,32 +9,47 @@
   padding-top: 48vh;
   z-index: 10000;
 }
-.enter-nickname{
-	padding-top: 120px;
+
+.enter-nickname {
+	padding-top: 20vh;
 }
-.chat-room{
+
+.chat-room {
   padding: 70px 0;
 }
 
-message{
+.member-list {
+  position: fixed;
+  left: 0;
+  top: 56px;
+  bottom: 0px;
+  overflow: auto;
+  border-right: 1px solid #efefef;
+  background: #f8f8f8;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+message {
   display: block;
   padding-bottom: 10px;
 }
 
-message + message{
+message + message {
   padding-top: 10px;
   border-top: 1px solid #DDD;
 }
 
-.composer{
+.composer {
   position: fixed;
-  left: 0;
+  left: 16.666667%;
   right: 0;
   bottom: 0;
-  padding: 0 15px 15px;
+  padding: 15px;
   background: #FFF;
+  border-top: 1px solid #efefef;
 }
 
-.composer .form-group{
+.composer .form-group {
   margin: 0;
 }

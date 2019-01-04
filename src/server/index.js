@@ -45,7 +45,6 @@ const io = socket(https.createServer(options).listen(4000));
 console.log('Initializing HTTPS server...');
 const server = https.createServer(options, (request, response) => {
   request.addListener('end', () => {
-    console.log('Serving file...', request.url);
     file.serve(request, response);
   });
 
@@ -109,12 +108,14 @@ io.on('connection', (socket) => {
     io.to(data.room).emit('members.updated', room.members);
   });
 
-  socket.on('chat.message', (data) => {
-    console.log('Chat message');
+  socket.on('send.message', (data) => {
+    console.log('Relaying message');
     if (!socket.room) {
       return;
     }
-    socket.broadcast.to(socket.room.name).emit('chat.message', data);
+    //socket.broadcast.to(socket.room.name).emit('chat.message', data);
+    io.to(socket.room.name).emit('chat.message', data);
+    //socket.broadcast.to(socket.id).emit('chat.message', data);
   });
 
   socket.on('typing', (userId) => {
