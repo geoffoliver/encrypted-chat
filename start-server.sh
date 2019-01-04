@@ -1,2 +1,2 @@
 #!/bin/sh
-node src/server/index.js >> server.log &
+node src/server/index.js dist/encrypted-chat >> server.log &
