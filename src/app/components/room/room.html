@@ -12,6 +12,7 @@
               <div class="form-group">
                 <input type="text"
                   autofocus
+                  autocomplete="off"
                   class="form-control"
                   placeholder="Your Name"
                   required="true"
@@ -37,6 +38,7 @@
               <div class="form-group">
                 <input type="text"
                   class="form-control"
+                  autocomplete="off"
                   placeholder="Room Name"
                   required="true"
                   name="roomName"
@@ -61,7 +63,7 @@
         [spin]="true"
         [icon]="['fal', 'sync']"
       ></fa-icon>
-      Please wait while we make everything secure...
+      Generating security keys...
     </div>
   </div>
   <div *ngIf="me" class="chat-room" #chatRoom>
@@ -106,7 +108,7 @@
                 name="newMessage"
                 (keydown)="sendTypingNotification($event)"
                 [(ngModel)]="newMessage">
-            <div class="input-group-btn">
+            <div class="input-group-append">
               <button class="btn btn-success"
                 [disabled]="!newMessageForm.valid">
                 Send

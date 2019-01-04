@@ -48,8 +48,57 @@ message + message {
   padding: 15px;
   background: #FFF;
   border-top: 1px solid #efefef;
+  transition: all 0.2s;
 }
 
 .composer .form-group {
   margin: 0;
+}
+
+@media (max-width: 768px) {
+  .composer {
+    left: 0;
+  }
+
+  .chat-room {
+    height: 100vh;
+    padding: 56px 0 70px 0;
+  }
+
+  .member-list,
+  .message-list,
+  .composer {
+    transition: all 0.2s;
+  }
+
+  .member-list {
+    height: 100%;
+    bottom: 0;
+    transform: translateX(100%);
+  }
+
+  .message-list {
+    padding-top: 15px;
+    top: 0;
+  }
+  /*
+  .chat-room .container-fluid > .row > div {
+    width: 100vw;
+  }
+  */
+  ::ng-deep .member-list-active {
+    overflow-x: hidden;
+  }
+
+  ::ng-deep .member-list-active .chat-room  .member-list {
+    transform: translateX(0);
+  }
+
+  ::ng-deep .member-list-active .chat-room  .message-list {
+    transform: translateX(-100%);
+  }
+
+  ::ng-deep .member-list-active .composer {
+    transform: translateY(100%);
+  }
 }
