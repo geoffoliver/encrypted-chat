@@ -61,7 +61,6 @@ message + message {
   }
 
   .chat-room {
-    height: 100vh;
     padding: 56px 0 70px 0;
   }
 
