@@ -47,3 +47,4 @@ Thumbs.db
 /src/server/server.key
 /src/server/server.crt
 /chat.old
+/server.log

@@ -11,7 +11,8 @@ npm install
 ```
 
 ## Next, this...
-You'll need build everything...
+Add SSL cert and key (.crt and .key) files into the `src/server` directory. After
+that, you'll need build everything...
 
 ```shell
 npm run build
@@ -20,7 +21,7 @@ npm run build
 ## Finally, start the server
 Start the server with...
 ```shell
-node server.js
+start-server.sh
 ```
 
 ## That's it!!
