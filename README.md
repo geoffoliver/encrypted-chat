@@ -17,6 +17,8 @@ This is an encrypted chat web app. You can set your name and the room where you 
 
 * Mobile friendly. It might be a little slow on older devices (PGP stuff is **expensive**) but it should work.
 
+* Desktop notifications. If you've got the chat tab in the background, and your browser and OS support it, you'll get a desktop notification whenever a new message arrives.
+
 ## Built With
 
 * [Angular 7](https://angular.io)
