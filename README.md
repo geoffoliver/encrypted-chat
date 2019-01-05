@@ -20,7 +20,7 @@ This is an encrypted chat web app. You can set your name and the room where you 
 * [Angular 7](https://angular.io)
 * [Socket.IO](https://socket.io)
 * [OpenPGP.js](https://github.com/openpgpjs/openpgpjs)
-* [NoSleep.js](https://github.com/richtr/NoSleep.js?files=1)
+* [NoSleep.js](https://github.com/richtr/NoSleep.js?files=1) (I still don't have this working)
 
 # Installation
 
