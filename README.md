@@ -75,8 +75,8 @@ Now you can start using your own self-hosted PGP encrypted chat. Just go to the 
 
 # To Do
 
-[ ] Lock rooms
-[ ] Copy link to invite other users to room
+- [ ] Lock rooms
+- [ ] Copy link to invite other users to room
 
 
 # Why
