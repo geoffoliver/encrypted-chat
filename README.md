@@ -2,6 +2,9 @@
 
 This is an encrypted chat web app. You can set your name and the room where you want to chat. No account to create, no privileges to worry about, no passwords to remember, no data stored on the server or in the browser, no file uploads, nothing fancy. Just plain text chat.
 
+## You wanna try it out? Try it out!
+[Check out the demo!](https://cup.plan8home.com:3000/)
+
 ## Features
 * Messages are encrypted and decrypted in the browser with [OpenPGP.js](https://github.com/openpgpjs/openpgpjs). The chat server _only sees encrypted messages_, and it doesn't store anything* on the server.
   * > ###### *So, there _is_ a log file - `server.log` - but it's not storing anything useful. Just check out the [server startup script](start-server.sh) to see how the server is started and the check out [chat server code](src/server/index.js) and you can see what's getting logged by searching for instances of `console.log`.
@@ -17,10 +20,6 @@ This is an encrypted chat web app. You can set your name and the room where you 
 * [Angular 7](https://angular.io)
 * [Socket.IO](https://socket.io)
 * [OpenPGP.js](https://github.com/openpgpjs/openpgpjs)
-
-
-## Enough talk, let me see it!
-Sure thing. [Check out the demo!](https://cup.plan8home.com:3000/)
 
 # Installation
 
