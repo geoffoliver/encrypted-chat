@@ -193,8 +193,6 @@ export class RoomComponent {
       path: 'openpgp.worker.min.js'
     });
 
-    noSleep.enable();
-
     this.initNotifications();
   }
 
@@ -247,6 +245,8 @@ export class RoomComponent {
   }
 
   login(e: Event) {
+    noSleep.enable();
+
     e.stopPropagation();
 
     if (this.nickname === '' || this.roomName === '') {
