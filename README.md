@@ -20,6 +20,7 @@ This is an encrypted chat web app. You can set your name and the room where you 
 * [Angular 7](https://angular.io)
 * [Socket.IO](https://socket.io)
 * [OpenPGP.js](https://github.com/openpgpjs/openpgpjs)
+* [NoSleep.js](https://github.com/richtr/NoSleep.js?files=1)
 
 # Installation
 
@@ -76,6 +77,8 @@ Now you can start using your own self-hosted PGP encrypted chat. Just go to the 
 
 - [ ] Lock rooms
 - [ ] Copy link for room invite
+- [ ] Notifications
+- [ ] PWA
 
 
 # Why
