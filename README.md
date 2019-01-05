@@ -1,5 +1,7 @@
 # Encrypted Chat
 
+![Screenshot](https://raw.githubusercontent.com/plan8studios/encrypted-chat/master/screenshot.png)
+
 This is an encrypted chat web app. You can set your name and the room where you want to chat. No account to create, no privileges to worry about, no passwords to remember, no data stored on the server or in the browser, no file uploads, nothing fancy. Just plain text chat.
 
 ## You wanna try it out? Try it out!
@@ -70,8 +72,6 @@ start-server.sh
 
 ## That's it!!
 Now you can start using your own self-hosted PGP encrypted chat. Just go to the address where you set it up (http://server-address-here:3000) and you should be chatting in no time!
-
-![Screenshot](https://raw.githubusercontent.com/plan8studios/encrypted-chat/master/screenshot.png)
 
 # To Do
 
