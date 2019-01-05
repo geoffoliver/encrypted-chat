@@ -37,7 +37,7 @@
     "node-http-server": "^8.1.2",
     "node-static": "^0.7.11",
     "nosleep.js": "^0.9.0",
-    "openpgp": "^4.4.2",
+    "openpgp": "^4.4.3",
     "rxjs": "~6.3.3",
     "socket.io": "^2.2.0",
     "tslib": "^1.9.0",

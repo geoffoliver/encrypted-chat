@@ -36,6 +36,7 @@ export class RoomComponent {
   systemUser: User;
 
   connected: boolean = false;
+  notify: boolean = false;
   privKey: any = {};
   socketConnected: boolean = false;
   connectFailed: boolean = false;
@@ -122,6 +123,10 @@ export class RoomComponent {
         msg.message = decrypted.data;
         this.messages.push(msg);
         this.scrollToBottom();
+
+        if (this.notify && document.hidden) {
+          new Notification(`New message received from ${msg.from.name}`);
+        }
       }, (error: any) => {
         console.log('decryption error', error);
       });
@@ -174,6 +179,7 @@ export class RoomComponent {
       if (!this.connected) {
         return;
       }
+
       if (document.hidden) {
         this.socket.emit('inactive', this.me.id);
       } else {
@@ -186,6 +192,26 @@ export class RoomComponent {
     openpgp.initWorker({
       path: 'openpgp.worker.min.js'
     });
+
+    noSleep.enable();
+
+    this.initNotifications();
+  }
+
+  initNotifications() {
+    if (!('Notification' in window)) {
+      return;
+    }
+
+    if (Notification.permission === 'granted') {
+      this.notify = true;
+    } else {
+      Notification.requestPermission().then((p) => {
+        if(p === 'granted') {
+          this.notify = true;
+        }
+      });
+    }
   }
 
   makePassword() {
@@ -222,8 +248,6 @@ export class RoomComponent {
 
   login(e: Event) {
     e.stopPropagation();
-
-    noSleep.enable();
 
     if (this.nickname === '' || this.roomName === '') {
       return;
