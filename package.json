@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host cup.local --ssl=true",
+    "start": "ng serve --host cup.local --ssl=true --configuration=dev",
     "build": "ng build",
+    "build-prod": "ng build --prod --aot",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -35,6 +36,7 @@
     "ngx-socket-io": "^2.1.1",
     "node-http-server": "^8.1.2",
     "node-static": "^0.7.11",
+    "nosleep.js": "^0.9.0",
     "openpgp": "^4.4.2",
     "rxjs": "~6.3.3",
     "socket.io": "^2.2.0",

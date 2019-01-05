@@ -74,9 +74,7 @@
           <ul class="list-unstyled">
             <li *ngFor="let member of members">
               <fa-icon
-                [icon]="member.active ?
-                  ['fas', 'circle'] :
-                  ['fal', 'circle']"
+                [icon]="['fas', 'circle']"
                 class="member-status"
                 [class.text-success]="member.active == true"
                 [class.text-warning]="member.active == false">

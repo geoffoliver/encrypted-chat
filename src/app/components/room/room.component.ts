@@ -1,28 +1,26 @@
 import { Component, ViewChild, ElementRef, Injectable } from '@angular/core';
 
 import { Socket } from 'ngx-socket-io';
+import NoSleep from 'nosleep.js';
 
 import { Message } from '../../models/message';
 import { User } from '../../models/user';
 
 var openpgp = require('openpgp');
 
-declare var io: any;
 declare var openpgp: any;
-declare function escape(s: string): string;
-declare function unescape(s: string): string;
+
+const noSleep = new NoSleep();
 
 @Injectable({
   providedIn: 'root'
 })
-
 @Component({
   moduleId: module.id,
   selector: 'room',
   templateUrl: './room.html',
   styleUrls: ['./room.css']
 })
-
 export class RoomComponent {
   generatingKey: boolean = false;
 
@@ -224,6 +222,8 @@ export class RoomComponent {
 
   login(e: Event) {
     e.stopPropagation();
+
+    noSleep.enable();
 
     if (this.nickname === '' || this.roomName === '') {
       return;
