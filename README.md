@@ -71,7 +71,7 @@ start-server.sh
 ```
 
 ## That's it!!
-Now you can start using your own self-hosted PGP encrypted chat. Just go to the address where you set it up (http://server-address-here:3000) and you should be chatting in no time!
+Now you can start using your own self-hosted PGP encrypted chat. Just go to the address where you set it up (https://server-address-here:3000) and you should be chatting in no time!
 
 # To Do
 
