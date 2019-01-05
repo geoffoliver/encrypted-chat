@@ -10,13 +10,16 @@ const fs = require('fs');
 console.log('Initializing static server...');
 const args = process.argv.slice(2);
 
-let path = `${__dirname}/public`
+let path = null;
 
 if (args[0]) {
   path = `${process.env.PWD}/${args[0]}`;
 }
 
-console.log('path', path);
+if (!path) {
+  console.log('You must provide a path to the files you wish to serve!');
+  return;
+}
 
 const file = new nodeStatic.Server(path, {
   cache: 0,
