@@ -285,9 +285,9 @@ export class RoomComponent {
   }
 
   scrollToBottom() {
-    setTimeout(function () {
+    requestAnimationFrame(function () {
       document.scrollingElement.scrollTop = document.scrollingElement.scrollHeight;
-    }, 0);
+    });
   }
 
   sendMessage() {
@@ -306,11 +306,11 @@ export class RoomComponent {
 
     this.newMessage = '';
 
-    this.messages.push(m);
+    requestAnimationFrame(() => {
+      this.messages.push(m);
 
-    this.scrollToBottom();
+      this.scrollToBottom();
 
-    setTimeout(() => {
       let pubKeys = this.members.map(async (member) => {
         return (await openpgp.key.readArmored(member.pubKey)).keys[0];
       });
@@ -333,7 +333,7 @@ export class RoomComponent {
           console.log('encryption error', error);
         });
       });
-    }, 400);
+    });
 
   }
 
