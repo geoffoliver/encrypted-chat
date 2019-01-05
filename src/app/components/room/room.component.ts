@@ -333,7 +333,7 @@ export class RoomComponent {
           console.log('encryption error', error);
         });
       });
-    });
+    }, 400);
 
   }
 
