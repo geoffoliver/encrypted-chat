@@ -77,9 +77,9 @@ Now you can start using your own self-hosted PGP encrypted chat. Just go to the 
 
 # To Do
 
-- [ ] Router
-- [ ] Lock rooms
-- [ ] Copy link for room invite
+- [x] Router
+- [x] Lock rooms
+- [x] Copy link for room invite
 - [x] Desktop Notifications
 - [ ] PWA/Save to home screen/whatever. Obviously this can't work without internet.
 
