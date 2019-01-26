@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  socketUrl: null
+  socketUrl: 'https://cup.local:4000'
 };

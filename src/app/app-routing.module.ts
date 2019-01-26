@@ -6,6 +6,10 @@ const routes: Routes = [
   {
     path: '',
     component: RoomComponent
+  },
+  {
+    path: 'chat/:roomId',
+    component: RoomComponent
   }
 ];
 

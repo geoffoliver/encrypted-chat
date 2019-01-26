@@ -14,8 +14,43 @@
 	padding-top: 20vh;
 }
 
+.disconnected {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
 .chat-room {
   padding: 70px 0;
+}
+
+.room-name {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #efefef;
+}
+
+.room-name.locked {
+  font-weight: bold;
+}
+
+.room-name .name {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: hidden;
+}
+
+.controls {
+  white-space: nowrap;
+}
+
+.controls > * {
+  margin-left: 5px;
+  cursor: pointer;
 }
 
 .member-list {
@@ -28,6 +63,19 @@
   background: #f8f8f8;
   padding-top: 10px;
   padding-bottom: 10px;
+}
+
+.member-list ul {
+  margin: 0 -15px;
+}
+
+.member-list li {
+  padding: 0 15px;
+}
+
+.member-list .me {
+  background: #efefef;
+  font-style: italic;
 }
 
 message {

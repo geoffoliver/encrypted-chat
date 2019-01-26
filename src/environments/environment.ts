@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  socketUrl: null
+  socketUrl: 'https://cup.plan8home.com:4000'
 };
 
 /*

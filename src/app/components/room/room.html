@@ -22,13 +22,15 @@
                   The name other people will see
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group" [hidden]="invitedTo !== null && roomName !== ''">
                 <input type="text"
                   class="form-control"
                   autocomplete="off"
                   placeholder="Room Name"
                   required="true"
                   name="roomName"
+                  [disabled]="invitedTo !== null && roomName !== ''"
+                  [readonly]="invitedTo !== null && roomName !== ''"
                   [(ngModel)]="roomName">
                 <div class="orm-text text-muted">
                   The room name where you'll be chatting
@@ -45,21 +47,46 @@
         </div>
       </div>
     </div>
-    <div *ngIf="generatingKey" class="key-loader">
+    <div *ngIf="lookingUpRoom" class="key-loader">
       <fa-icon
         [spin]="true"
         [icon]="['fal', 'sync']"
       ></fa-icon>
-      Generating security keys...
+      Retrieving room data...
+    </div>
+    <div *ngIf="loggingIn" class="key-loader">
+      <fa-icon
+        [spin]="true"
+        [icon]="['fal', 'sync']"
+      ></fa-icon>
+      Logging in...
     </div>
   </div>
   <div *ngIf="me" class="chat-room" #chatRoom>
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-2 member-list">
-          <small class="text-muted"><strong>Room:</strong> {{ roomName }}</small>
+          <div class="text-muted small room-name" [class.locked]="locked">
+            <div class="name">{{ roomName }}</div>
+            <div class="controls">
+              <fa-icon
+                [icon]="['fal', lockIcon]"
+                [spin]="locking"
+                (click)="toggleLocked()"
+                [class.text-success]="locked"
+                [class.text-danger]="!locked"
+                [title]="locked ? 'Unlock' : 'Lock'"
+              ></fa-icon>
+              <fa-icon
+                [icon]="['fal', copying ? 'sync' : 'clipboard']"
+                [spin]="copying"
+                (click)="copyLink()"
+                title="Copy Invite Link"
+              ></fa-icon>
+            </div>
+          </div>
           <ul class="list-unstyled">
-            <li *ngFor="let member of members">
+            <li *ngFor="let member of members" [class.me]="member.id === me.id" [title]="member.id === me.id ? 'This is you' : null">
               <fa-icon
                 [icon]="['fas', 'circle']"
                 class="member-status"
@@ -91,6 +118,7 @@
                 class="form-control"
                 required="true"
                 name="newMessage"
+                maxlength="1024"
                 (keydown)="sendTypingNotification($event)"
                 [(ngModel)]="newMessage">
             <div class="input-group-append">
@@ -105,11 +133,11 @@
     </div>
   </div>
 </div>
-<div *ngIf="!socketConnected" id="disconnected">
+<div *ngIf="!socketConnected" class="disconnected">
   <div class="alert alert-info" *ngIf="!connectFailed">
-    <i class="fa fa-fw fa-spin fa-refresh"></i> Connecting. Please wait.
+    <fa-icon [icon]="['fal', 'sync']" spin="true"></fa-icon> Connecting. Please wait.
   </div>
-  <div class="alert alert-error" *ngIf="connectFailed">
-    Connection failed :(
+  <div class="alert alert-danger" *ngIf="connectFailed">
+    <fa-icon [icon]="['fal', 'frown']"></fa-icon> Connection failed
   </div>
 </div>

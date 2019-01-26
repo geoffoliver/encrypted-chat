@@ -6,7 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faKeyboard, faSync } from '@fortawesome/pro-light-svg-icons';
+import { faKeyboard, faSync, faClipboard, faLock, faLockOpen, faFrown } from '@fortawesome/pro-light-svg-icons';
 import { faCircle } from '@fortawesome/pro-solid-svg-icons';
 
 import { environment } from '../environments/environment';
@@ -25,7 +25,7 @@ const config: SocketIoConfig = {
   declarations: [
     AppComponent,
     RoomComponent,
-    MessageComponent
+    MessageComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +41,6 @@ const config: SocketIoConfig = {
 })
 export class AppModule {
   constructor() {
-    library.add(faKeyboard, faCircle, faSync)
+    library.add(faKeyboard, faCircle, faSync, faClipboard, faLock, faLockOpen, faFrown);
   }
 }
