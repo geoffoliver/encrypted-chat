@@ -6,8 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faKeyboard, faSync, faClipboard, faLock, faLockOpen, faFrown } from '@fortawesome/pro-light-svg-icons';
-import { faCircle } from '@fortawesome/pro-solid-svg-icons';
+import { faKeyboard, faSync, faClipboard, faLock, faLockOpen, faFrown, faCircle } from '@fortawesome/pro-solid-svg-icons';
 
 import { environment } from '../environments/environment';
 

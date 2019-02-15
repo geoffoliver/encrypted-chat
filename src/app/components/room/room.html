@@ -50,14 +50,14 @@
     <div *ngIf="lookingUpRoom" class="key-loader">
       <fa-icon
         [spin]="true"
-        [icon]="['fal', 'sync']"
+        [icon]="['fas', 'sync']"
       ></fa-icon>
       Retrieving room data...
     </div>
     <div *ngIf="loggingIn" class="key-loader">
       <fa-icon
         [spin]="true"
-        [icon]="['fal', 'sync']"
+        [icon]="['fas', 'sync']"
       ></fa-icon>
       Logging in...
     </div>
@@ -70,7 +70,7 @@
             <div class="name">{{ roomName }}</div>
             <div class="controls">
               <fa-icon
-                [icon]="['fal', lockIcon]"
+                [icon]="['fas', lockIcon]"
                 [spin]="locking"
                 (click)="toggleLocked()"
                 [class.text-success]="locked"
@@ -78,7 +78,7 @@
                 [title]="locked ? 'Unlock' : 'Lock'"
               ></fa-icon>
               <fa-icon
-                [icon]="['fal', copying ? 'sync' : 'clipboard']"
+                [icon]="['fas', copying ? 'sync' : 'clipboard']"
                 [spin]="copying"
                 (click)="copyLink()"
                 title="Copy Invite Link"
@@ -95,7 +95,7 @@
               </fa-icon>
               {{ member.name }}
               <fa-icon
-                [icon]="['fal', 'keyboard']"
+                [icon]="['fas', 'keyboard']"
                 class="text-muted"
                 *ngIf="member.typing"
               ></fa-icon>
@@ -135,9 +135,9 @@
 </div>
 <div *ngIf="!socketConnected" class="disconnected">
   <div class="alert alert-info" *ngIf="!connectFailed">
-    <fa-icon [icon]="['fal', 'sync']" spin="true"></fa-icon> Connecting. Please wait.
+    <fa-icon [icon]="['fas', 'sync']" spin="true"></fa-icon> Connecting. Please wait.
   </div>
   <div class="alert alert-danger" *ngIf="connectFailed">
-    <fa-icon [icon]="['fal', 'frown']"></fa-icon> Connection failed
+    <fa-icon [icon]="['fas', 'frown']"></fa-icon> Connection failed
   </div>
 </div>
