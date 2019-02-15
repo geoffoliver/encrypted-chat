@@ -40,7 +40,7 @@ npm install
 
 ## Install SSL Certs
 
-Add SSL cert and key (.crt and .key) files into the `src/server` directory. How you obtain these is up to you, but I recommend [Let's Encrypt](https://letsencrypt.org/).
+Add SSL cert and key (name them `server.crt` and `server.key`) files into the `src/server` directory. How you obtain these is up to you, but I recommend [Let's Encrypt](https://letsencrypt.org/).
 
 ## Configure Enviornment
 
